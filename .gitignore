@@ -9,6 +9,7 @@ __pycache__/
 
 # generated plots
 data/plot/*
+!data/plot/.gitkeep
 
 # preprocessed files
 data/preprocessed/*
@@ -16,3 +17,4 @@ data/preprocessed/*
 
 # genereted processed files
 data/processed/*
+!data/processed/.gitkeep

@@ -1,2 +1,8 @@
-flagowanie zepsutych plików (np. w tym pliku jest milion zepsutych danych więc czas moze sie nie zgadzać, albo w ogole nie ma rekordów)
- moze ostatni wynik dodać przed 10 minutami XD
+# Photovoltaic data processing and analysis
+
+Project used for processing and analysing photovoltaic studies results.
+
+# How to run
+
+Running on `python3.11`. 
+To execute program enter `python main.py` in terminal.
