@@ -1,0 +1,32 @@
+LabVIEW Measurement	
+Writer_Version	2
+Reader_Version	2
+Separator	Tab
+Decimal_Separator	,
+Multi_Headings	No
+X_Columns	One
+Time_Pref	Absolute
+Operator	DamianGłowienka
+Date	2023/08/18
+Time	12:28:19,6926217079162597656
+***End_of_Header***	
+	
+Channels	3			
+Samples	1	1	1	
+Date	2023/08/18	2023/08/18	2023/08/18	
+Time	12:28:19,6926217079162597656	12:28:19,6926217079162597656	12:28:19,6926217079162597656	
+X_Dimension	Time	Time	Time	
+X0	0,0000000000000000E+0	0,0000000000000000E+0	0,0000000000000000E+0	
+Delta_X	1,000000	1,000000	1,000000	
+***End_of_Header***				
+X_Value	Voltage 1	Current 1	Power 1	Comment
+0,000000	NaN	NaN	0,000000
+0,000000	NaN	NaN	0,000000
+0,000000	NaN	NaN	0,000000
+0,000000	NaN	NaN	0,000000
+0,000000	NaN	NaN	0,000000
+0,000000	NaN	NaN	0,000000
+0,000000	NaN	NaN	0,000000
+0,000000	NaN	NaN	0,000000
+0,000000	NaN	NaN	0,000000
+0,000000	NaN	NaN	0,000000
