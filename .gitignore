@@ -1,0 +1,18 @@
+# pycharm editor files
+.idea
+
+# python virtual environment
+venv
+
+# python cache files
+__pycache__/
+
+# generated plots
+data/plot/*
+
+# preprocessed files
+data/preprocessed/*
+!data/preprocessed/.example.txt
+
+# genereted processed files
+data/processed/*

@@ -1,0 +1,31 @@
+samples_in_file:
+  MaxPlanck_outdoor35NREL_D15_D12.txt:
+    time_interval: 30
+    samples:
+      - skip
+      - Si
+      - skip
+      - skip
+      - skip
+      - skip
+      - 36B
+      - skip
+      - 36C
+      - skip
+      - 36D
+#  MaxPlanck_outdoor30.txt:
+#    time_interval: 10
+#    samples:
+#      - 36A
+#      - 39D
+#      - 36B
+#      - skip
+#      - 36C
+#      - skip
+#      - 36D
+#      - skip
+#      - skip
+#      - skip
+#      - skip
+#      - skip
+#      - Si
