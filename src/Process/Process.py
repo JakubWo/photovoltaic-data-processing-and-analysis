@@ -52,7 +52,9 @@ def post_process(path: str) -> None:
     for file_name in os.listdir(path):
         full_path = f'{path}/{file_name}'
 
+        _, extension = os.path.splitext(full_path)
+
         if os.path.isdir(full_path):
             post_process(full_path)
-        else:
+        elif '.csv' == extension:
             PostProcessData.post_process_file(full_path)

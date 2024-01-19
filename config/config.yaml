@@ -1,10 +1,13 @@
 # ----------------------------------------------------------------------------------------------------------------------
-# Wszystkie pliki w folderze data/preprocessed muszą mieć wypisane, po kolei, do jakiej próbki odnoszą się wyniki
-# Tzn. Np. dla pliku MaxPlanck_outdoor18.txt podane jest "Voltage", "Current" i "Power" dla próbki "1" i "2".
-# Trzeba powiedzieć programowi za pomocą poniższej konfiguracji powiązania między m.in.
-# "Voltage 1" i odpowiednią realną próbką. Niestety oznaczenia w plikach są tylko liczbą porządkową, a nie oznaczeniem
-# próbki. Dlatego też poniższe mapowanie jest obowiązkowe, jeżeli chcemy, aby program wygenerował odpowiednie wykresy.
-# Pliki nieopisane poniżej nie zostaną brane pod uwagę w procesie analizy.
+# Schemat opisu:
+#  MaxPlanck_outdoor2.txt:  /nazwa pliku
+#    time_interval: 1       /czas pomiędzy pomiarami
+#    samples:
+#      - x                  /kanał pierwszy na urządzeniu
+#      - y                  /kanał drugi na urządzeniu (gdy nie jest nic podłączone to piszemy "skip"!)
+#
+# Pliki tutaj muszą być identyczne z plikami w folderze preprocessed. W przypadku gdy tu nie będzie pliku, a w preprocessed
+# będzie, to plik zostanie pominięty. Gdy będzie sytuacja na odwrót to pojawi się błąd bo program nie znajdzie pliku
 # ----------------------------------------------------------------------------------------------------------------------
 samples_in_file:
   BPW37_outdoor.txt:
