@@ -1,21 +1,24 @@
 import pandas as pd
 
+from src.Const.MessageConst import MessageConst
+from src.Utils.FileUtils import FileUtils
 from src.Utils.PrintUtils import PrintUtils
 
 
 def post_process_file(file_name: str) -> None:
-    PrintUtils.print_line('file.postprocess.start', file_name, should_print_hash=True)
+    PrintUtils.print_line(MessageConst.POST_PROCESS_START, file_name, should_print_hash=True)
 
     df_csv = pd.read_csv(
         f'{file_name}',
         dtype={
-            'X_Value': 'str',
+            'X_Value': 'object',
             'Voltage': 'float64',
             'Current': 'float64',
             'Power': 'float64'
         },
-        parse_dates=['X_Value']
     ).sort_values('X_Value')
+
+    df_csv['X_Value'] = pd.to_datetime(df_csv['X_Value'], format='%Y-%m-%d %H:%M:%S.%f')
 
     if len(df_csv.index) < 2:
         return
@@ -48,4 +51,4 @@ def post_process_file(file_name: str) -> None:
         ]
     )
 
-    PrintUtils.print_line('file.postprocess.finish')
+    PrintUtils.print_line(MessageConst.POST_PROCESS_FINISH)

@@ -5,26 +5,28 @@ import numpy as np
 import pandas as pd
 
 from src.Config.Config import Config
+from src.Const.MessageConst import MessageConst
+from src.Utils.FileUtils import FileUtils
 from src.Utils.PrintUtils import PrintUtils
-from src.Const import FilenameConst
+from src.Const.FileConst import FileConst
 
 
 def process_file(file_name: str, configuration: dict) -> None:
-    file_path_from_project_root = f'{FilenameConst.PREPROCESSED_PATH}/{file_name}'
+    file_path_from_project_root = f'{FileConst.PREPROCESSED_DIR}/{file_name}'
 
     PrintUtils.print_line(
-        'file.process.start',
+        MessageConst.PROCESS_START,
         file_path_from_project_root,
         should_print_hash=True
     )
 
-    with open(file_path_from_project_root, 'r', encoding='cp1252') as file:
+    with open(FileUtils.get_absolute_path(file_path_from_project_root), 'r', encoding='cp1252') as file:
         lines = file.readlines()
 
     file_table_header_line_number = get_file_table_header_line_number(lines)
 
     if -1 == file_table_header_line_number:
-        PrintUtils.print_line('file.process.no_table_found')
+        PrintUtils.print_line(MessageConst.PROCESS_NO_TABLE_FOUND)
         return
 
     df = create_dataframe(lines[file_table_header_line_number:])
@@ -41,10 +43,9 @@ def process_file(file_name: str, configuration: dict) -> None:
             continue
 
         if f'Voltage {index + 1}' not in df.columns:
-            PrintUtils.print_line('file.process.no_column_found', index + 1)
+            PrintUtils.print_line(MessageConst.PROCESS_NO_COLUMN_FOUND, index + 1)
             continue
 
-        # df_temp = df[['X_Value', f'Voltage {index + 1}', f'Current {index + 1}', f'Power {index + 1}']].copy()
         df_temp = pd.DataFrame().assign(
             X_Value=df['X_Value'],
             Voltage=df[f'Voltage {index + 1}'],
@@ -53,11 +54,11 @@ def process_file(file_name: str, configuration: dict) -> None:
         )
 
         if Config.SPLIT_FILES:
-            if not os.path.isdir(f'{FilenameConst.PROCESSED_PATH}/{file_name.split(".")[0]}'):
-                os.mkdir(f'{FilenameConst.PROCESSED_PATH}/{file_name.split(".")[0]}')
+            if not os.path.isdir(f'{FileConst.PROCESSED_DIR}/{file_name.split(".")[0]}'):
+                os.mkdir(f'{FileConst.PROCESSED_DIR}/{file_name.split(".")[0]}')
 
             df_temp.to_csv(
-                f'{FilenameConst.PROCESSED_PATH}/{file_name.split(".")[0]}/{name}.csv',
+                FileUtils.get_absolute_path(f'{FileConst.PROCESSED_DIR}/{file_name.split(".")[0]}/{name}.csv'),
                 mode='a',
                 index=False,
                 columns=[
@@ -69,10 +70,10 @@ def process_file(file_name: str, configuration: dict) -> None:
             )
         else:
             df_temp.to_csv(
-                f'{FilenameConst.PROCESSED_PATH}/{name}.csv',
+                FileUtils.get_absolute_path(f'{FileConst.PROCESSED_DIR}/{name}.csv'),
                 mode='a',
                 index=False,
-                header=os.path.exists(f'{FilenameConst.PROCESSED_PATH}/{name}.csv') is False,
+                header=os.path.exists(f'{FileConst.PROCESSED_DIR}/{name}.csv') is False,
                 columns=[
                     'X_Value',
                     'Voltage',
@@ -81,24 +82,34 @@ def process_file(file_name: str, configuration: dict) -> None:
                 ]
             )
 
-    PrintUtils.print_line('file.process.finish')
+    PrintUtils.print_line(MessageConst.PROCESS_FINISH)
 
 
 def get_file_date_and_time(lines: list) -> str:
     date = None
     time = None
+    microseconds = "000001"
 
     for line in lines:
         if "Date\t" in line and date is None:
             date = line.removeprefix("Date\t").removesuffix("\n")
 
         if "Time\t" in line and time is None:
-            time = line.removeprefix("Time\t").removesuffix("\n").split(",", 1)[0]
+            time_with_microseconds = line.removeprefix("Time\t").removesuffix("\n")
+
+            time, microseconds = time_with_microseconds.split(
+                "," if "," in time_with_microseconds else ".",
+                1
+            )
+            microseconds = microseconds[0:6]
 
         if date is not None and time is not None:
             break
 
-    return "%s %s" % (date, time)
+    if date is None or time is None:
+        raise RuntimeError("W pliku nie znaleziono daty i czasu rozpoczęcia pomiaru")
+
+    return "%s %s.%s" % (date, time, microseconds)
 
 
 def get_file_table_header_line_number(lines: list) -> int:
@@ -130,7 +141,7 @@ def create_dataframe(lines: list) -> pd.DataFrame:
 
 
 def count_time(df: pd.DataFrame, lines: list, configuration: dict, file_path_from_project_root: str) -> None:
-    date_time = dt.strptime(get_file_date_and_time(lines), '%Y/%m/%d %H:%M:%S')
+    date_time = dt.strptime(get_file_date_and_time(lines), '%Y/%m/%d %H:%M:%S.%f')
 
     if Config.PROCESS_TIME_COUNTING:
 
