@@ -25,3 +25,12 @@ samples_in_file:
       - cellB
       - skip
       - cellC
+  .example_2.txt:
+    time_interval: 10
+    samples:
+      - cellA
+  .example_3.txt:
+    time_interval: 10
+    samples:
+      - cellA
+

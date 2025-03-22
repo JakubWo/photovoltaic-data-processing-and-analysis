@@ -13,7 +13,7 @@ data/plot/*
 
 # preprocessed files
 data/preprocessed/*
-!data/preprocessed/.example.txt
+!data/preprocessed/.example*.txt
 
 # genereted processed files
 data/processed/*

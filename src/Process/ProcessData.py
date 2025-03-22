@@ -73,7 +73,7 @@ def process_file(file_name: str, configuration: dict) -> None:
                 FileUtils.get_absolute_path(f'{FileConst.PROCESSED_DIR}/{name}.csv'),
                 mode='a',
                 index=False,
-                header=os.path.exists(f'{FileConst.PROCESSED_DIR}/{name}.csv') is False,
+                header=os.path.exists(FileUtils.get_absolute_path(f'{FileConst.PROCESSED_DIR}/{name}.csv')) is False,
                 columns=[
                     'X_Value',
                     'Voltage',
